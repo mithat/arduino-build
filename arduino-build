@@ -1,0 +1,71 @@
+#!/bin/bash
+
+# Build script for Arduino projects.
+# Mithat Konar (https://mithatkonar.com)
+
+# ---------------------
+# --- Configuration ---
+# ---------------------
+CONF_FILE=arduino.conf
+
+if [[ -f $CONF_FILE ]] ; then
+    source arduino.conf
+else
+    echo "Config file '$CONF_FILE' not found." > /dev/stderr
+    exit 2;
+fi
+
+# ==============================================================================
+# GO!
+# ==============================================================================
+
+action=$1
+source_file=$(ls -1 *.ino)
+arduino_cmd=$ARDUINO_PATH/arduino
+
+# construct output path
+output_path=./build-$BOARD
+if [[ x$BOARD_PARAM != x ]] ; then
+      output_path=$output_path-$BOARD_PARAM
+fi
+mkdir -p $output_path
+
+# construct board options
+board_options=$BOARD_PACKAGE:$BOARD_ARCHITECTURE:$BOARD
+if [[ x$BOARD_PARAM != x ]] ; then
+	board_options=$board_options:$BOARD_PARAM
+fi
+
+# parse the action
+if [[ "x$action" == "x" ]] ; then
+	action=build
+fi
+case $action in
+clean)
+    dothis="rm -r $output_path"
+    echo "$dothis"
+    $dothis
+    rv=$?
+    ;;
+build)
+    echo "building ..."
+    $arduino_cmd --board $board_options --pref build.path=$output_path --verify $source_file
+    rv=$?
+    ;;
+upload)
+    $arduino_cmd --board $board_options --pref build.path=$output_path --upload --port $PORT $source_file
+    rv=$?
+    ;;
+monitor)
+    echo "Monitoring on $PORT at $SPEED baud..."
+    gtkterm -p $PORT -s $SPEED # &
+    rv=$?
+    ;;
+*)
+    message="Unknown option"
+    rv=1
+    ;;
+esac
+
+exit $rv
+

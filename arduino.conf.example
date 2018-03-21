@@ -1,0 +1,12 @@
+# === Arduino path ===
+ARDUINO_PATH=/home/mithat/opt/arduino
+
+# === Board parameters ===
+BOARD_PACKAGE=arduino
+BOARD_ARCHITECTURE=avr
+BOARD=nano
+BOARD_PARAM="cpu=atmega328old"
+
+# === Communication settings ===
+PORT=/dev/ttyUSB0
+SPEED=9600
