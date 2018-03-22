@@ -6,7 +6,7 @@ Mithat Konar (<https://mithatkonar.com>)
 
 Description
 ----------
-This project is a simple wrapper script for [Arduino's CLI](https://github.com/arduino/Arduino/blob/master/build/shared/manpage.adoc) for building and debugging Arduino projects and a simple Makefile to invoke it.
+This project is a simple wrapper script for [Arduino's CLI](https://github.com/arduino/Arduino/blob/master/build/shared/manpage.adoc) and a simple Makefile to invoke it for building and debugging Arduino projects .
 
 Why another Makefile-based solution for building Arduino projects? I came up with this because my (formerly?) favorite Makefile solution wasn't producing the expected results on a particular project I was working on, and I needed a solution fast! The approach taken here uses the stock Arduino build infrastructure directly, so it should be reasonably reliable -- though possibly not as fast nor as efficient as other solutions. It's developed and tested on Linux only. Mileage on Mac and Windows will vary. I make no claims that this isn't reinventing a wheel, and possibly not very well at that.
 
@@ -20,10 +20,7 @@ Currently, only Linux is supported. You'll need a recently installed and updated
 
 Caveats
 -------
-In time, the following should get addressed, but here are some known issues:
-
-* This package hasn't been thoroughly tested across a range of Arduino devices.
-* The way the configuration file is brought into the main script currently lacks security checking. Any executable bash code that appears in the config file will be executed when the `arduino-script` is executed. Until this is addressed, use this only in an environment that you have direct and exclusive control of.
+Be sure to check this project's [known bugs](https://github.com/mithat/arduino-build/issues) to see if there are any show-stoppers for you.
 
 Setup
 ------------
