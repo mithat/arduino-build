@@ -1,4 +1,6 @@
-# Makefile for building Arduino projects using arduino-build.sh.
+# Makefile for building Arduino projects using arduino-build.
+# Copyright (C) 2018 Mithat Konar (https://mithatkonar.com)
+# License: LGPL v3
 
 BB=./arduino-build.sh
 

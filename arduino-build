@@ -1,7 +1,8 @@
 #!/bin/bash
 
 # Build script for Arduino projects.
-# Mithat Konar (https://mithatkonar.com)
+# Copyright (C) 2018 Mithat Konar (https://mithatkonar.com)
+# License: LGPL v3
 
 # ---------------------
 # --- Configuration ---
