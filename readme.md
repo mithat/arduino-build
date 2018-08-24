@@ -5,26 +5,26 @@ Build script and Makefile for [Arduino](https://www.arduino.cc).
 Mithat Konar (<https://mithatkonar.com>)
 
 Description
-----------
-This project is a simple wrapper for [Arduino's CLI](https://github.com/arduino/Arduino/blob/master/build/shared/manpage.adoc) and a simple Makefile to invoke it for building and debugging Arduino projects .
+-----------
+This project is a simple wrapper for [Arduino's CLI](https://github.com/arduino/Arduino/blob/master/build/shared/manpage.adoc) and a Makefile to invoke it for building and debugging Arduino projects .
 
-Why another Makefile-based solution for building Arduino projects? I came up with this because my (formerly?) favorite Makefile solution wasn't producing the expected results on a particular project I was working on, and I needed a solution fast! The approach taken here uses the stock Arduino build infrastructure directly, so it should be reasonably reliable -- though possibly not as fast nor as efficient as other solutions. It's developed and tested on Linux only. Mileage on Mac and Windows will vary. I make no claims that this isn't reinventing a wheel, and possibly not very well at that.
+Why another Makefile-based solution for building Arduino projects? I came up with this because my go-to Makefile solution wasn't producing the expected results on a particular project I was working on, and I needed a solution fast! The approach taken here uses the stock Arduino build infrastructure directly, so it should be reasonably reliable -- though possibly not as fast nor as efficient as other solutions. It's developed and tested on Linux only. Mileage on Mac and Windows will vary. I make no claims that this isn't reinventing a wheel, and possibly not very well at that.
 
 License
-------
+-------
 This project's code is published under the [GNU Lesser General Pulic License v3](https://www.gnu.org/licenses/lgpl-3.0.en.html). Documentation is published under the [GNU Free Documentation License](https://www.gnu.org/licenses/fdl.html).
 
 Requirements
------------
-Currently, only Linux is supported. You'll need a recently installed and updated [Arduino IDE](https://www.arduino.cc/en/Main/Software), `make`, and `bash`. If you want to do serial monitoring, you'll also need `gtk-term`.
+------------
+Currently, only Linux is supported. You'll need a recent version of the [Arduino IDE](https://www.arduino.cc/en/Main/Software), `make`, and `bash`. If you want to do serial monitoring, you'll also need `gtk-term`.
 
 Caveats
 -------
 Be sure to check this project's [known bugs](https://github.com/mithat/arduino-build/issues) to see if there are any show-stoppers for you.
 
 Setup
-------------
-* Copy two files to the root of your Arduino project: `Makefile` and `arduino.conf.example`.
+-----
+* Copy the `Makefile` and `arduino.conf.example` files to the root of your Arduino project.
 * Open the `Makefile` you copied in a text editor and change the value of the `BB` variable to point to the `arduino-build` script found in this project.
 * Rename the `arduino.conf.example` you copied to `arduino.conf`. Then change the variables in `arduino.conf` as described below (with examples):
 
@@ -45,7 +45,7 @@ The path to the main Arduino installation directory.
 Get these values  from `<arduino-user-config>/packages/` where `<arduino-user-config>` is the users' Arduino configuration directory,
 (e.g., `/home/username/.arduino15`). **Don't get these from the `hardware` directory found under `ARDUINO_PATH` because that will not have the most updated board info.**
 
-Adapted from the [Arduino man page]((https://github.com/arduino/Arduino/blob/master/build/shared/manpage.adoc)):
+The following has been adapted from the [Arduino man page](https://github.com/arduino/Arduino/blob/master/build/shared/manpage.adoc):
 
 * `BOARD_PACKAGE` is the identifier of the vendor (the first level folders inside the `packages` directory). Default Arduino boards use `arduino`.
 * `BOARD_ARCHITECTURE` is the architecture of the board (the first subdirectory under `../packages/$BOARD_PACKAGE/hardware`). Default arduino boards use `avr` for all AVR-based boards (like Uno, Mega or Leonardo) or `sam` for 32bit SAM-based boards (like Arduino Due).
@@ -64,7 +64,7 @@ ls /dev/ACM* ; ls /dev/ttyUSB*
 
 One of the devices listed is likely your Arduino. As an alternative or as a last resort you can open the official Arduino IDE and look at what it shows as the active port.
 
-`SPEED` is the baud rate you want Serial communication to happen at.
+`SPEED` is the baud rate at which you want Serial communication to happen.
 
 Use
 -----
