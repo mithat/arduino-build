@@ -2,7 +2,7 @@
 # Copyright (C) 2018 Mithat Konar (https://mithatkonar.com)
 # License: LGPL v3
 
-BB=./arduino-build.sh
+BB=./arduino-build
 
 .PHONY : compile clean upload monitor upmon
 
