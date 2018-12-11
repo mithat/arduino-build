@@ -25,10 +25,17 @@ Be sure to check this project's [known bugs](https://github.com/mithat/arduino-b
 Setup
 -----
 * Copy the `Makefile` and `arduino.conf.example` files to the root of your Arduino project.
-* Open the `Makefile` you copied in a text editor and change the value of the `BB` variable to point to the `arduino-build` script found in this project.
+* Edit the copied `Makefile` so the `BB` variable points to the `arduino-build` script found in this project.
 * Rename the `arduino.conf.example` you copied to `arduino.conf`. Then change the variables in `arduino.conf` as described below (with examples):
 
 ### arduino.conf variables
+
+#### Build path
+
+    BUILD_PATH=..builds/my-project-name
+
+Where you want the build results to be put. Note: An [Arduino bug](https://github.com/arduino/Arduino/issues/8271) may cause rebuilding of the project to fail if the BUILD_PATH is inside the sketch folder.
+
 #### Arduino path
 
     ARDUINO_PATH=/home/username/opt/arduino
@@ -42,8 +49,9 @@ The path to the main Arduino installation directory.
     BOARD=nano
     BOARD_PARAM="cpu=atmega328old"
 
-Get these values  from `<arduino-user-config>/packages/` where `<arduino-user-config>` is the users' Arduino configuration directory,
-(e.g., `/home/username/.arduino15`). **Don't get these from the `hardware` directory found under `ARDUINO_PATH` because that will not have the most updated board info.**
+Get these values  from `<arduino-user-config>/packages/` where `<arduino-user-config>` is your Arduino configuration directory, (e.g., `/home/username/.arduino15`).
+
+**Don't get these from the `hardware` directory found under `ARDUINO_PATH` because that will not have the most updated board info.**
 
 The following has been adapted from the [Arduino man page](https://github.com/arduino/Arduino/blob/master/build/shared/manpage.adoc):
 
@@ -71,7 +79,7 @@ Use
 You can invoke the following Makefile targets:
 
 * `make` or `make build`: compile and build the project (equivalent to "Verify" in the Arduino IDE).
-* `make clean`: nuke all the previous build results. You might want to do this if you find really weird compile and/or build errors.
+* `make clean`: nuke all the previous build results. You might want to do this if you find weird compile and/or build errors.
 * `make upload`: upload the sketch to the Arduino. This will rebuild the project if needed.
 * `make monitor`: start the serial monitor.
 * `make upmon`: upload and start the serial monitor.

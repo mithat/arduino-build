@@ -1,4 +1,5 @@
 # === Arduino path ===
+BUILD_PATH=../build/project-name
 ARDUINO_PATH=/home/mithat/opt/arduino
 
 # === Board parameters ===

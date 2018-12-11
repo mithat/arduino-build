@@ -9,6 +9,10 @@
 # ---------------------
 CONF_FILE=arduino.conf
 
+# -----------
+# --- GO! ---
+# -----------
+### get parameters
 if [[ -f $CONF_FILE ]] ; then
     source arduino.conf
 else
@@ -16,20 +20,33 @@ else
     exit 2;
 fi
 
-# ==============================================================================
-# GO!
-# ==============================================================================
-
 action=$1
 source_file=$(ls -1 *.ino)
-arduino_cmd=$ARDUINO_PATH/arduino
 
-# construct output path
-output_path=./build-$BOARD
-if [[ x$BOARD_PARAM != x ]] ; then
-      output_path=$output_path-$BOARD_PARAM
+### test parameters
+if [[ -z "$ARDUINO_PATH" ]] ; then
+    echo "The ARDUINO_PATH is not specified." > /dev/stderr
+    exit 1
 fi
-mkdir -p $output_path
+
+if [[ -z "$BUILD_PATH" ]] ; then
+    echo "The BUILD_PATH is not specified." > /dev/stderr
+    exit 1
+fi
+
+if [[ -z "$action" ]] ; then
+    echo "No action was specified." > /dev/stderr
+    exit 1
+fi
+
+if [[ -z "$source_file" ]] ; then
+    echo "Source ino file not found." > /dev/stderr
+    exit 1
+fi
+
+### run with it
+arduino_cmd=$ARDUINO_PATH/arduino
+output_path=$BUILD_PATH
 
 # construct board options
 board_options=$BOARD_PACKAGE:$BOARD_ARCHITECTURE:$BOARD
@@ -41,6 +58,7 @@ fi
 if [[ "x$action" == "x" ]] ; then
 	action=build
 fi
+
 case $action in
 clean)
     dothis="rm -r $output_path"
@@ -49,11 +67,14 @@ clean)
     rv=$?
     ;;
 build)
+    mkdir -p $output_path
     echo "building ..."
+    echo $arduino_cmd --board $board_options --pref build.path=$output_path --verify $source_file
     $arduino_cmd --board $board_options --pref build.path=$output_path --verify $source_file
     rv=$?
     ;;
 upload)
+    echo "uploading ..."
     $arduino_cmd --board $board_options --pref build.path=$output_path --upload --port $PORT $source_file
     rv=$?
     ;;
@@ -69,4 +90,3 @@ monitor)
 esac
 
 exit $rv
-
